@@ -1,6 +1,9 @@
 # TODO phase1
 
-1. 要件定義に記載された各エンドポイントに対するアクセスについてのテストを.tests/Feature/ProductTest.php関数に実装する.テスト項目は以下の通り.また各テスト用関数は,ステータスコード200のHTTPレスポンスを返却する.
+testコードは
+test/Feature/AccessTest
+
+1. 要件定義に記載された各エンドポイントに対するアクセスについてのテストをtests/Feature/ProductTest.php関数に実装する.テスト項目は以下の通り.また各テスト用関数は,ステータスコード200のHTTPレスポンスを返却する.
     - api/productsにGETメソッドでアクセスできる
         canAccessApiProductsByGET()
     - api/productsにPOSTメソッドでアクセスできる
@@ -26,7 +29,7 @@
 
 2. 上記関数に対応するように,routes/api.phpに各エンドポイント    に対する処理を記述する.まず簡単にclosureで記述する.関数に実
    際の処理は記述しない.
-   
+
    finished all at 7/24 14:05
 
 3. テスト用にデータベースを作成する.
@@ -101,3 +104,5 @@
         addShop()
 
     finished all at 7/25 19:00
+
+なお,productsとshopsの多対多リレーションを実現するために,機能の追加が後ほど必要であることをここに付しておく.

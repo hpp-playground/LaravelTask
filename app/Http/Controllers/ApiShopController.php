@@ -12,7 +12,6 @@ class ApiShopController extends Controller
         return response()->json($shopService->getShops());
     }
 
-
     public function addShop(Request $request, ApiShopService $shopService)
     {
         $request->validate([

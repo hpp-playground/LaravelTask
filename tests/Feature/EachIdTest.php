@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use DB;
 
 class EachIdTest extends TestCase
 {
@@ -13,17 +14,28 @@ class EachIdTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        DB::statement('ALTER TABLE products AUTO_INCREMENT = 1;');
+        DB::statement('ALTER TABLE shops AUTO_INCREMENT = 1;');
         $this->artisan('db:seed', ['--class' => 'TestDataSeeder']);
     }
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+    /**
+    * @test
+    */
+    public function responseFromApiProductsProduct_idByGETIsJSON()
+    {
+        $response = $this->get('api/products/1');
+        $this->assertThat($response->content(), $this->isJson());
     }
+
+    /**
+    * @test
+    */
+    public function JSONFromApiProductsProduct_idByGETSatisfyRequirements()
+    {
+        $response = $this->get('api/products/1');
+        $product = $response->json();
+        $this->assertSame(['title', 'description','price'], array_keys($product));
+    }
+
 }
