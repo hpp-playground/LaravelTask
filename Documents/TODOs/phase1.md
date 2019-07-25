@@ -34,7 +34,7 @@
         - productは10品目,shopは5店舗存在する.
     finished all at 7/24 16:30
 
-4. データベースに関するテストを実装して検証する。検証する要件は以下の通り
+4. データベースに関するテストを実装して検証する.検証する要件は以下の通り.
     - api/productsにGETメソッドでアクセスするとJSONで商品情報が10件返却される.より粒度を細かくすると以下の通り.
         - api/productsにGETメソッドでアクセスするとJSONが返却される
             responseFromApiProductsByGETIsJSON()
@@ -52,3 +52,9 @@
             ProductsCountFromApiShopsByGETIs5()
 
     finished all at 7/25 11:00
+
+5. POSTメソッドを用いてデータ追加を行う機能を検証する.要件は以下の通り.
+    - api/productsに[商品タイトル,商品説明,商品価格]をPOSTすると、productsテーブルにそのデータが追加される
+        canAddDataIntoProductsTableToAccessApiProductsByPOST()
+    - api/shopsに[店舗名称]をPOSTすると、shopsテーブルにそのデータが追加される
+        canAddDataIntoShopsTableToAccessApiShopsByPOST()

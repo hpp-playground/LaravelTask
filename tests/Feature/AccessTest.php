@@ -32,7 +32,12 @@ class AccessTest extends TestCase
     */
     public function canAccessApiProductsByPOST()
     {
-        $response = $this->post('api/products');
+        $params = [
+            'title' => 'title',
+            'description' => 'description',
+            'price' => 100,
+        ];
+        $response = $this->postJson('api/products', $params);
         $response->assertStatus(200);
     }
 
@@ -78,7 +83,10 @@ class AccessTest extends TestCase
     */
     public function canAccessApiShopsWithByPOST()
     {
-        $response = $this->post('api/shops');
+        $params = [
+            'name' => 'name',
+        ];
+        $response = $this->postJson('api/shops', $params);
         $response->assertStatus(200);
     }
 
@@ -174,4 +182,32 @@ class AccessTest extends TestCase
         $response->assertJsonCount(5);
     }
 
+
+    //TODOs phase1, 5
+    /**
+    * @test
+    */
+    public function canAddDataIntoProductsTableToAccessApiProductsByPOST()
+    {
+        $params = [
+            'title' => 'コラコーカ',
+            'description' => 'おいしい飲み物',
+            'price' => 430,
+        ];
+        $this->postJson('api/products', $params);
+        $this->assertDatabaseHas('products', $params);
+    }
+
+
+    /**
+    * @test
+    */
+    public function canAddDataIntoShopsTableToAccessApiShopsByPOST()
+    {
+        $params = [
+            'name' => 'PARGO',
+        ];
+        $this->postJson('api/shops', $params);
+        $this->assertDatabaseHas('shops', $params);
+    }
 }

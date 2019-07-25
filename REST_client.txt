@@ -1,0 +1,5 @@
+POST http://homestead.test/api/shops
+
+<request>
+    <name>PARGO</name>
+</request>

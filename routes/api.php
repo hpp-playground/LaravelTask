@@ -21,7 +21,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('products', function () {
     return response()->json(\App\Product::query()->select(['id', 'title', 'description', 'price'])->get());
 });
-Route::post('products', function () {});
+
+Route::post('products', function (\Illuminate\Http\Request $request) {
+    $product = new \App\Product();
+    $product->title = $request->json('title');
+    $product->description = $request->json('description');
+    $product->price = $request->json('price');
+    $product->save();
+});
+
 
 Route::get('products/{product_id}', function () {});
 Route::put('products/{product_id}', function () {});
@@ -33,7 +41,11 @@ Route::get('shops', function () {
     return response()->json(\App\Shop::query()->select(['id', 'name'])->get());
 });
 
-Route::post('shops', function () {});
+Route::post('shops', function (\Illuminate\Http\Request $request) {
+    $shop = new \App\Shop();
+    $shop->name = $request->json('name');
+    $shop->save();
+});
 
 Route::get('shops/{shop_id}', function () {});
 Route::put('shops/{shop_id}', function () {});
