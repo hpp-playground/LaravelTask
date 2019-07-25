@@ -21,10 +21,12 @@
         canAccessApiShopsShop_idByPUT()
     - api/shops/{shop_id}にDELETEメソッドでアクセスできる
         canAccessApiShopsShop_idByDELETE()
+
     finished all at 7/24 13:55
 
 2. 上記関数に対応するように,routes/api.phpに各エンドポイント    に対する処理を記述する.まず簡単にclosureで記述する.関数に実
    際の処理は記述しない.
+   
    finished all at 7/24 14:05
 
 3. テスト用にデータベースを作成する.
@@ -80,10 +82,22 @@
         - api/productsに対するGETメソッド
             ApiProductController@getProducts
         - api/productsに対するPOSTメソッド
-            ApiProductController@postProducts
+            ApiProductController@addProduct
         - api/shopsに対するGETメソッド
             ApiShopController@getShops
         - api/shopsに対するPOSTメソッド
-            ApiShopController@postShops
+            ApiShopController@addShop
 
     finished all at 7/25 15:00
+
+8. 上記7において実装した各メソッドをさらにServiceクラスとControllerクラスに分離する.仕様は以下の通り.
+    - api/productsに対するGETメソッドに対応するServiceクラスメソッド
+        getProducts()
+    - api/productsに対するPOSTメソッドに対応するServiceクラスメソッド
+        addProduct()
+    - api/shopsに対するGETメソッドに対応するServiceクラスメソッド
+        getShops()
+    - api/shopsに対するPOSTメソッドに対応するServiceクラスメソッド
+        addShop()
+
+    finished all at 7/25 19:00

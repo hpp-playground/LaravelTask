@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //products endpoint
 Route::get('products', 'ApiProductController@getProducts');
-Route::post('products', 'ApiProductController@postProducts');
+Route::post('products', 'ApiProductController@addProduct');
 
 
 Route::get('products/{product_id}', function () {});
@@ -29,7 +29,7 @@ Route::delete('products/{product_id}', function () {});
 
 //shops endpoint
 Route::get('shops', 'ApiShopController@getShops');
-Route::post('shops', 'ApiShopController@postShops');
+Route::post('shops', 'ApiShopController@addShop');
 
 Route::get('shops/{shop_id}', function () {});
 Route::put('shops/{shop_id}', function () {});

@@ -3,3 +3,11 @@ POST http://homestead.test/api/shops
 <request>
     <name>PARGO</name>
 </request>
+
+###
+
+http://homestead.test/api/products
+
+###
+
+http://homestead.test/api/shops

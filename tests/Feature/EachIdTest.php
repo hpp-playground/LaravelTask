@@ -8,6 +8,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EachIdTest extends TestCase
 {
+    use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('db:seed', ['--class' => 'TestDataSeeder']);
+    }
     /**
      * A basic feature test example.
      *

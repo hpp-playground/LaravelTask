@@ -3,25 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\ApiProductService;
 
 class ApiProductController extends Controller
 {
-    public function getProducts()
+    public function getProducts(ApiProductService $productService)
     {
-        return response()->json(\App\Product::query()->select(['id', 'title', 'description', 'price'])->get());
+        return response()->json($productService->getProducts());
     }
 
 
-    public function postProducts(Request $request)
+    public function addProduct(Request $request, ApiProductService $productService)
     {
-        if (!($request->json('title') && $request->json('description') && $request->json('price'))) {
-            return response()->json([], \Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-        $product = new \App\Product();
-        $product->title = $request->json('title');
-        $product->description = $request->json('description');
-        $product->price = $request->json('price');
-        $product->save();
+        $request->validate([
+            'title' => 'required|max:100',
+            'description' => 'required|max:500',
+            'price' => 'required|integer|min:0'
+        ]);
+        $title          = $request->json('title');
+        $description    = $request->json('description');
+        $price          = $request->json('price');
+        $productService->addProduct($title, $description, $price);
     }
 
 }
