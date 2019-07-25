@@ -57,7 +57,5 @@ products.shop_idとshops.idで外部キー制約を設定する。
 |id|AUTO_INCREMENT|-|
 |shop_id|bigInteger|-|
 |product_id|bigInteger|-|
-|created_at|timestamp|作成日時|
-|updated_at|timestamp|更新日時|
 
 複数の店舗で複数の商品が取り扱われる可能性があるので、本Webアプリケーションのshopsとproductsの関係は多対多リレーションである。よって両テーブルの中継ぎを行う結合テーブルを作成する。

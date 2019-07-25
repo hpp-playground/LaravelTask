@@ -23,9 +23,9 @@
         canAccessApiShopsShop_idByDELETE()
     finished all at 7/24 13:55
 
-2. 上記関数に対応するように,routes/api.phpに各エンドポイントに対する処理を記述する.まず簡単にclosureで記述する.
-    関数に実際の処理は記述しない.
-    finished all at 7/24 14:05
+2. 上記関数に対応するように,routes/api.phpに各エンドポイント    に対する処理を記述する.まず簡単にclosureで記述する.関数に実
+   際の処理は記述しない.
+   finished all at 7/24 14:05
 
 3. テスト用にデータベースを作成する.
     - テスト用データベースを２種類作成(Products, shops)
@@ -58,3 +58,32 @@
         canAddDataIntoProductsTableToAccessApiProductsByPOST()
     - api/shopsに[店舗名称]をPOSTすると、shopsテーブルにそのデータが追加される
         canAddDataIntoShopsTableToAccessApiShopsByPOST()
+
+    finished all at 7/25 14:00
+
+6. POSTメソッドにValidationを実装する.また,validation用のテストを追加する.
+    - api/productsにPOSTメソッドでデータを送信した際に,'title'が含まれない場合422UnprocessableEntityが返却される.
+        responseFromApiProductsWithoutTitleIs422ByPOST()
+    - api/productsにPOSTメソッドでデータを送信した際に,'description'が含まれない場合422UnprocessableEntityが返却される.
+        responseFromApiProductsWithoutDescriptionIs422ByPOST()
+    - api/productsにPOSTメソッドでデータを送信した際に,'price'が含まれない場合422UnprocessableEntityが返却される.
+        responseFromApiProductsWithoutPriceIs422ByPOST()
+   - api/productsにPOSTメソッドでデータを送信した際に,それが空JSONデータの時422UnprocessableEntityが返却される.
+        responseFromApiShopsWithoutAllIs422ByPOST()
+   - api/shopsにPOSTメソッドでデータを送信した際に,'name'が含まれない場合422UnprocessableEntityが返却される.
+        responseFromApiShopsWithoutNameIs422ByPOST()
+
+    finished all at 7/25 14:40
+
+7. api/productsとapi/shopsに対してGET,POSTでアクセスした際の処理を,ApiProductController, ApiShopControllerに移動させる.
+    - 各Controllerに処理を移譲したのち,上記のテストが破綻しなければよい.それぞれ関数名は以下のようにする.
+        - api/productsに対するGETメソッド
+            ApiProductController@getProducts
+        - api/productsに対するPOSTメソッド
+            ApiProductController@postProducts
+        - api/shopsに対するGETメソッド
+            ApiShopController@getShops
+        - api/shopsに対するPOSTメソッド
+            ApiShopController@postShops
+
+    finished all at 7/25 15:00

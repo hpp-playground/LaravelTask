@@ -210,4 +210,69 @@ class AccessTest extends TestCase
         $this->postJson('api/shops', $params);
         $this->assertDatabaseHas('shops', $params);
     }
+
+
+    //TODOs phase1, 6
+
+    /**
+    * @test
+    */
+    public function responseFromApiProductsWithoutTitleIs422ByPOST()
+    {
+        $params = [
+            'description' => 'おいしい虚無',
+            'price' => 0,
+        ];
+        $response = $this->postJson('api/products', $params);
+        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function responseFromApiProductsWithoutDescriptionIs422ByPOST()
+    {
+        $params = [
+            'title' => 'おーいコブ茶',
+            'price' => 0,
+        ];
+        $response = $this->postJson('api/products', $params);
+        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function responseFromApiProductsWithoutPriceIs422ByPOST()
+    {
+        $params = [
+            'title' => '雨水',
+            'description' => 'プライスレス',
+        ];
+        $response = $this->postJson('api/products', $params);
+        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function responseFromApiProductsWithoutAllIs422ByPOST()
+    {
+        $params = [];
+        $response = $this->postJson('api/products', $params);
+        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function responseFromApiShopsWithoutNameIs422ByPOST()
+    {
+        $params = [];
+        $response = $this->postJson('api/shops', $params);
+        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+
 }
+
