@@ -18,15 +18,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //products endpoint
-Route::get('products', function () {});
+Route::get('products', function () {
+    return response()->json(\App\Product::query()->select(['id', 'title', 'description', 'price'])->get());
+});
 Route::post('products', function () {});
 
 Route::get('products/{product_id}', function () {});
 Route::put('products/{product_id}', function () {});
 Route::delete('products/{product_id}', function () {});
 
+
 //shops endpoint
-Route::get('shops', function () {});
+Route::get('shops', function () {
+    return response()->json(\App\Shop::query()->select(['id', 'name'])->get());
+});
+
 Route::post('shops', function () {});
 
 Route::get('shops/{shop_id}', function () {});
