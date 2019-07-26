@@ -57,7 +57,11 @@ class AccessTest extends TestCase
     */
     public function canAccessApiProductsProduct_idByPUT()
     {
-        $response = $this->put('api/products/1');
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => 'title',
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
         $response->assertStatus(200);
     }
 

@@ -14,8 +14,6 @@ class EachIdTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        DB::statement('ALTER TABLE products AUTO_INCREMENT = 1;');
-        DB::statement('ALTER TABLE shops AUTO_INCREMENT = 1;');
         $this->artisan('db:seed', ['--class' => 'TestDataSeeder']);
     }
 
@@ -25,7 +23,7 @@ class EachIdTest extends TestCase
     public function responseFromApiProductsProduct_idByGETIsJSON()
     {
         $id = DB::table('products')->max('id');
-        $response = $this->get('api/products/' . $id);
+        $response = $this->get('api/products/'.$id);
         $this->assertThat($response->content(), $this->isJson());
     }
 
@@ -35,9 +33,22 @@ class EachIdTest extends TestCase
     public function JSONFromApiProductsProduct_idByGETSatisfyRequirements()
     {
         $id = DB::table('products')->max('id');
-        $response = $this->get('api/products/' . $id);
+        $response = $this->get('api/products/'.$id);
         $product = $response->json();
         $this->assertSame(['title', 'description','price'], array_keys($product));
+    }
+
+    /**
+    * @test
+    */
+    public function canChangeIdxOfProductToAccessApiProductsProduct_idByPUT()
+    {
+        $params = [
+            'title' => '四ツ矢ナノダー',
+        ];
+        $id = DB::table('products')->max('id');
+        $response = $this->putJson('api/products/'.$id, $params);
+        $this->assertEquals('四ツ矢ナノダー', \App\Product::find($id)->title);
     }
 
 }
