@@ -40,10 +40,27 @@ Route::delete('products/{product_id}', function (Request $request, $product_id) 
 });
 
 
+
+
 //shops endpoint
 Route::get('shops', 'ApiShopController@getShops');
 Route::post('shops', 'ApiShopController@addShop');
 
-Route::get('shops/{shop_id}', function () {});
-Route::put('shops/{shop_id}', function () {});
-Route::delete('shops/{shop_id}', function () {});
+
+Route::get('shops/{shop_id}', function ($shop_id) {
+    $shop = \App\Shop::find($shop_id,['name']);
+    return response()->json($shop);
+});
+
+Route::put('shops/{shop_id}', function (Request $request, $shop_id) {
+    $shop = \App\Shop::find($shop_id);
+    $shop->update($request->all());
+    return response()->json($shop);
+});
+
+
+Route::delete('shops/{shop_id}', function (Request $request, $shop_id) {
+    $shop = \App\Shop::find($shop_id);
+    $shop->delete();
+    return response()->json($shop);
+});

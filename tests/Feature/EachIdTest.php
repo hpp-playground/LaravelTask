@@ -61,4 +61,48 @@ class EachIdTest extends TestCase
         $this->assertFalse(DB::table('products')->where('id', $id)->exists());
     }
 
+    /**
+    * @test
+    */
+    public function responseFromApiShopsShop_idByGETIsJSON()
+    {
+        $id = DB::table('shops')->max('id');
+        $response = $this->get('api/shops/'.$id);
+        $this->assertThat($response->content(), $this->isJson());
+    }
+
+    /**
+    * @test
+    */
+    public function JSONFromApiShopsShop_idByGETSatisfyRequirements()
+    {
+        $id = DB::table('shops')->max('id');
+        $response = $this->get('api/shops/'.$id);
+        $shop = $response->json();
+        $this->assertSame(['name'], array_keys($shop));
+    }
+
+    /**
+    * @test
+    */
+    public function canChangeIdxOfShopToAccessApiShopsShop_idByPUT()
+    {
+        $params = [
+            'name' => '渋山109',
+        ];
+        $id = DB::table('shops')->max('id');
+        $response = $this->putJson('api/shops/'.$id, $params);
+        $this->assertEquals('渋山109', \App\Shop::find($id)->name);
+    }
+
+    /**
+    * @test
+    */
+    public function canDeleteIdxOfShopToAccessApiShopsShop_idByDELETE()
+    {
+        $id = DB::table('shops')->max('id');
+        $response = $this->delete('api/shops/'.$id);
+        $this->assertFalse(DB::table('shops')->where('id', $id)->exists());
+    }
+
 }

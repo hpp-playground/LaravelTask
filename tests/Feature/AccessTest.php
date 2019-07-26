@@ -111,7 +111,11 @@ class AccessTest extends TestCase
     */
     public function canAccessApiShopsShop_idByPUT()
     {
-        $response = $this->put('api/shops/1');
+        $id = DB::table('shops')->max('id');
+        $params = [
+            'name' => 'name'
+        ];
+        $response = $this->putJson('api/shops/'.$id, $params);
         $response->assertStatus(200);
     }
 
@@ -120,7 +124,8 @@ class AccessTest extends TestCase
     */
     public function canAccessApiShopsShop_idByDELETE()
     {
-        $response = $this->delete('api/shops/1');
+        $id = DB::table('shops')->max('id');
+        $response = $this->delete('api/shops/'.$id);
         $response->assertStatus(200);
     }
 

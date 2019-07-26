@@ -1,6 +1,6 @@
 # TODO phase2
 
-testコードは
+testコード:
 tests/Feature/EachIdTest
 
 1. api/products, api/shopsに対するGET,PUT,DELETEメソッドでのアクセスに対する応答を実装する.まずは以下の機能を実装する.
@@ -16,16 +16,16 @@ tests/Feature/EachIdTest
 
     finished all at 7/26 14:00
 
-    - api/shops/1にGETメソッドでアクセスすると,id=1の店舗情報JSONで返却される
+    - api/shops/1にGETメソッドでアクセスすると,id=xの店舗情報JSONで返却される
         - api/shops/{$shop_id}にGETメソッドで取得できる店舗情報はJSONである
             responseFromApiShopsShop_idByGETIsJSON()
         - api/shops/{$shop_id}にGETメソッドで取得できる店舗情報のJSONは要件通りである
             JSONFromApiShopsShop_idByGETSatisfyRequirements()
-    - api/shops/{$shop_id}にPUTメソッドでJSONを送信すると,id=1の店舗情報が変更される
-        canChangeId1OfShopToAccessApiShopsShop_idByPUT()
-    - api/shops/{$shop_id}にDELETEメソッドでアクセスすると,id=1の店舗情報が削除される
-        canDeleteId1OfShopToAccessApiShopsShop_idByDELETE()
-
+    - api/shops/{$shop_id}にPUTメソッドでJSONを送信すると,id=xの店舗情報が変更される
+        canChangeIdxOfShopToAccessApiShopsShop_idByPUT()
+    - api/shops/{$shop_id}にDELETEメソッドでアクセスすると,id=xの店舗情報が削除される
+        canDeleteIdxOfShopToAccessApiShopsShop_idByDELETE()
+    finished all at 7/26 14:30
 
 2. 存在しないproduct_id, shop_idに対して問い合わせを行なった場合,HTTPレスポンス404を返却する
     - api/products/product_idに対してGETメソッドでアクセスした際に404NOT_FOUNDを返却する
