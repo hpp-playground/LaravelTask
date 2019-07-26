@@ -24,7 +24,8 @@ class EachIdTest extends TestCase
     */
     public function responseFromApiProductsProduct_idByGETIsJSON()
     {
-        $response = $this->get('api/products/1');
+        $id = DB::table('products')->max('id');
+        $response = $this->get('api/products/' . $id);
         $this->assertThat($response->content(), $this->isJson());
     }
 
@@ -33,7 +34,8 @@ class EachIdTest extends TestCase
     */
     public function JSONFromApiProductsProduct_idByGETSatisfyRequirements()
     {
-        $response = $this->get('api/products/1');
+        $id = DB::table('products')->max('id');
+        $response = $this->get('api/products/' . $id);
         $product = $response->json();
         $this->assertSame(['title', 'description','price'], array_keys($product));
     }

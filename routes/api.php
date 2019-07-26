@@ -23,9 +23,7 @@ Route::post('products', 'ApiProductController@addProduct');
 
 
 Route::get('products/{product_id}', function ($product_id) {
-    $product = \App\Product::where('id',$product_id)
-                ->select(['title','description','price'])
-                ->get();
+    $product = \App\Product::find($product_id,['title','description','price']);
     return response()->json($product);
 });
 Route::put('products/{product_id}', function () {});

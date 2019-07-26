@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use DB;
 
 class AccessTest extends TestCase
 {
@@ -138,15 +139,6 @@ class AccessTest extends TestCase
         $products = $response->json();
         $product = $products[0];
         $this->assertSame(['id', 'title', 'description', 'price'], array_keys($product));
-    }
-
-    /**
-    * @test
-    */
-    public function ProductsCountFromApiProductsByGETIs10()
-    {
-        $response = $this->get('api/products');
-        $response->assertJsonCount(10);
     }
 
 
