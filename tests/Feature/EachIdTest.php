@@ -51,4 +51,14 @@ class EachIdTest extends TestCase
         $this->assertEquals('四ツ矢ナノダー', \App\Product::find($id)->title);
     }
 
+    /**
+    * @test
+    */
+    public function canDeleteIdxOfProductToAccessApiProductsProduct_idByDELETE()
+    {
+        $id = DB::table('products')->max('id');
+        $response = $this->delete('api/products/'.$id);
+        $this->assertFalse(DB::table('products')->where('id', $id)->exists());
+    }
+
 }

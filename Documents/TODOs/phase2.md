@@ -14,6 +14,8 @@ tests/Feature/EachIdTest
     - api/products/{$product_id}にDELETEメソッドでアクセスすると,id=xの商品情報が削除される
         canDeleteIdxOfProductToAccessApiProductsProduct_idByDELETE()
 
+    finished all at 7/26 14:00
+
     - api/shops/1にGETメソッドでアクセスすると,id=1の店舗情報JSONで返却される
         - api/shops/{$shop_id}にGETメソッドで取得できる店舗情報はJSONである
             responseFromApiShopsShop_idByGETIsJSON()

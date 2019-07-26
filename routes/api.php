@@ -33,7 +33,11 @@ Route::put('products/{product_id}', function (Request $request, $product_id) {
     return response()->json($product);
 });
 
-Route::delete('products/{product_id}', function () {});
+Route::delete('products/{product_id}', function (Request $request, $product_id) {
+    $product = \App\Product::find($product_id);
+    $product->delete();
+    return response()->json($product);
+});
 
 
 //shops endpoint

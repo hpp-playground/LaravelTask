@@ -70,7 +70,8 @@ class AccessTest extends TestCase
     */
     public function canAccessApiProductsProduct_idByDELETE()
     {
-        $response = $this->delete('api/products/1');
+        $id = DB::table('products')->max('id');
+        $response = $this->delete('api/products/'.$id);
         $response->assertStatus(200);
     }
 
