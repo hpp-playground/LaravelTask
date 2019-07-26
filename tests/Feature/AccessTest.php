@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use DB;
+use \Illuminate\Http\Response;
 
 class AccessTest extends TestCase
 {
@@ -48,7 +49,8 @@ class AccessTest extends TestCase
     */
     public function canAccessApiProductsProduct_idByGET()
     {
-        $response = $this->get('api/products/1');
+        $id = DB::table('products')->max('id');
+        $response = $this->get('api/products/'.$id);
         $response->assertStatus(200);
     }
 
@@ -102,7 +104,8 @@ class AccessTest extends TestCase
     */
     public function canAccessApiShopsShop_idByGET()
     {
-        $response = $this->get('api/shops/1');
+        $id = DB::table('shops')->max('id');
+        $response = $this->get('api/shops/'.$id);
         $response->assertStatus(200);
     }
 
@@ -226,7 +229,7 @@ class AccessTest extends TestCase
             'price' => 0,
         ];
         $response = $this->postJson('api/products', $params);
-        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -239,7 +242,7 @@ class AccessTest extends TestCase
             'price' => 0,
         ];
         $response = $this->postJson('api/products', $params);
-        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -252,7 +255,7 @@ class AccessTest extends TestCase
             'description' => 'プライスレス',
         ];
         $response = $this->postJson('api/products', $params);
-        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -262,7 +265,7 @@ class AccessTest extends TestCase
     {
         $params = [];
         $response = $this->postJson('api/products', $params);
-        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -272,7 +275,7 @@ class AccessTest extends TestCase
     {
         $params = [];
         $response = $this->postJson('api/shops', $params);
-        $response->assertStatus(\Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
 

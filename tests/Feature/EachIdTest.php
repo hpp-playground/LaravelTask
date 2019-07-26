@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use DB;
+use \Illuminate\Http\Response;
 
 class EachIdTest extends TestCase
 {
@@ -16,6 +17,8 @@ class EachIdTest extends TestCase
         parent::setUp();
         $this->artisan('db:seed', ['--class' => 'TestDataSeeder']);
     }
+
+    //TODO phase2, 1
 
     /**
     * @test
@@ -103,6 +106,74 @@ class EachIdTest extends TestCase
         $id = DB::table('shops')->max('id');
         $response = $this->delete('api/shops/'.$id);
         $this->assertFalse(DB::table('shops')->where('id', $id)->exists());
+    }
+
+    //TODO phase2, 2
+
+    /**
+    * @test
+    */
+    public function thereIsNoResouceOnApiProductsProduct_idAndReturn404ByGET()
+    {
+        $id = DB::table('products')->max('id') + 1;
+        $response = $this->get('api/products/'.$id);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    /**
+    * @test
+    */
+    public function thereIsNoResouceOnApiProductsProduct_idAndReturn404ByPUT()
+    {
+        $id = DB::table('products')->max('id') + 1;
+        $params = [
+            'title' => 'not found?',
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    /**
+    * @test
+    */
+    public function thereIsNoResouceOnApiProductsProduct_idAndReturn404ByDELETE()
+    {
+        $id = DB::table('products')->max('id') + 1;
+        $response = $this->delete('api/products/'.$id);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    /**
+    * @test
+    */
+    public function thereIsNoResouceOnApiShopsShop_idAndReturn404ByGET()
+    {
+        $id = DB::table('shops')->max('id') + 1;
+        $response = $this->get('api/shops/'.$id);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    /**
+    * @test
+    */
+    public function thereIsNoResouceOnApiShopsShop_idAndReturn404ByPUT()
+    {
+        $id = DB::table('shops')->max('id') + 1;
+        $params = [
+            'title' => 'not found?',
+        ];
+        $response = $this->putJson('api/shops/'.$id, $params);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    /**
+    * @test
+    */
+    public function thereIsNoResouceOnApiShopsShop_idAndReturn404ByDELETE()
+    {
+        $id = DB::table('shops')->max('id') + 1;
+        $response = $this->delete('api/shops/'.$id);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
 }

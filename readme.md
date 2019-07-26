@@ -2,11 +2,11 @@
 
 Laravelを用いた課題用リポジトリです.仕様は以下の通り.
 
-# 機能とAPIエンドポイント
+## 機能とAPIエンドポイント
 
 機能とエンドポイントの対応は以下の通り。
 
-## Product
+### Product
 
 |内容|エンドポイント|HTTPメソッド|
 |---|---|---|
@@ -16,7 +16,7 @@ Laravelを用いた課題用リポジトリです.仕様は以下の通り.
 |編集|api/products/{product_id}|PUT|
 |削除|api/products/{product_id}|DELETE|
 
-## Shop
+### Shop
 
 |内容|エンドポイント|HTTPメソッド|
 |---|---|---|
@@ -27,11 +27,11 @@ Laravelを用いた課題用リポジトリです.仕様は以下の通り.
 |削除|api/shops/{shop_id}|DELETE|
 
 
-# データベース
+## データベース
 
 productおよびshopに関するデータベース定義は以下の通り。
 
-## products
+### products
 
 |カラム名|型|備考|
 |-|-|-|
@@ -44,7 +44,7 @@ productおよびshopに関するデータベース定義は以下の通り。
 
 なお商品画像は商品のidに紐づいた名前で保存される。
 
-## shops
+### shops
 |カラム名|型|備考|
 |-|-|-|
 |id|AUTO_INCREMENT|-|
@@ -54,7 +54,7 @@ productおよびshopに関するデータベース定義は以下の通り。
 
 products.shop_idとshops.idで外部キー制約を設定する。
 
-## shop_product
+### shop_product
 
 |カラム名|型|備考|
 |-|-|-|

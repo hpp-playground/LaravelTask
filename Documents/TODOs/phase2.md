@@ -25,12 +25,21 @@ tests/Feature/EachIdTest
         canChangeIdxOfShopToAccessApiShopsShop_idByPUT()
     - api/shops/{$shop_id}にDELETEメソッドでアクセスすると,id=xの店舗情報が削除される
         canDeleteIdxOfShopToAccessApiShopsShop_idByDELETE()
+
     finished all at 7/26 14:30
 
 2. 存在しないproduct_id, shop_idに対して問い合わせを行なった場合,HTTPレスポンス404を返却する
     - api/products/product_idに対してGETメソッドでアクセスした際に404NOT_FOUNDを返却する
+        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByGET()
     - api/products/product_idに対してPUTメソッドでアクセスした際に404NOT_FOUNDを返却する
+        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByPUT()
     - api/products/product_idに対してDELETEメソッドでアクセスした際に404NOT_FOUNDを返却する
+        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByDELETE()
     - api/shops/shop_idに対してGETメソッドでアクセスした際に404NOT_FOUNDを返却する
+        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByGET()
     - api/shops/shop_idに対してPUTメソッドでアクセスした際に404NOT_FOUNDを返却する
+        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByPUT()
     - api/shops/shop_idに対してDELETEメソッドでアクセスした際に404NOT_FOUNDを返却する
+        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByDELETE()
+    
+    finished all at 7/26 15:15
