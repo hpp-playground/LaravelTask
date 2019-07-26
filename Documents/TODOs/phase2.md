@@ -54,7 +54,7 @@ tests/Feature/EachIdTest
            ifPriceIsNullOnApiProductsProduct_idThenReturn422ByPUT()
        - api/shops/{$shop_id}に対してname==空文字がPUTされた時HTTP_UNPROCESSABLE_ENTITYを返却する
            ifNameIsNullOnApiProductsProduct_idThenReturn422ByPUT()
-        
+
     finished all at 7/26 16:00
 
     要件を満たさない値がPUTされるケース

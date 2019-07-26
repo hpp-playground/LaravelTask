@@ -23,36 +23,9 @@ Route::get('products', 'ApiProductController@getProducts');
 Route::post('products', 'ApiProductController@addProduct');
 
 
-Route::get('products/{product_id}', function ($product_id) {
-    if (!DB::table('products')->where('id', $product_id)->exists()) {
-        return response()->json([], Response::HTTP_NOT_FOUND);
-    }
-    $product = \App\Product::find($product_id,['title','description','price']);
-    return response()->json($product);
-});
-
-Route::put('products/{product_id}', function (Request $request, $product_id) {
-    if (!DB::table('products')->where('id', $product_id)->exists()) {
-        return response()->json([], Response::HTTP_NOT_FOUND);
-    }
-    $request->validate([
-        'title' => 'filled|max:100',
-        'description' => 'filled|max:500',
-        'price' => 'filled|integer|min:0'
-    ]);
-    $product = \App\Product::find($product_id);
-    $product->update($request->all());
-    return response()->json($product);
-});
-
-Route::delete('products/{product_id}', function (Request $request, $product_id) {
-    if (!DB::table('products')->where('id', $product_id)->exists()) {
-        return response()->json([], Response::HTTP_NOT_FOUND);
-    }
-    $product = \App\Product::find($product_id);
-    $product->delete();
-    return response()->json($product);
-});
+Route::get('products/{product_id}', 'ApiProductController@getProduct');
+Route::put('products/{product_id}', 'ApiProductController@updateProduct');
+Route::delete('products/{product_id}', 'ApiProductController@deleteProduct');
 
 
 
