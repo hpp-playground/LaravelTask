@@ -35,6 +35,11 @@ Route::put('products/{product_id}', function (Request $request, $product_id) {
     if (!DB::table('products')->where('id', $product_id)->exists()) {
         return response()->json([], Response::HTTP_NOT_FOUND);
     }
+    $request->validate([
+        'title' => 'filled|max:100',
+        'description' => 'filled|max:500',
+        'price' => 'filled|integer|min:0'
+    ]);
     $product = \App\Product::find($product_id);
     $product->update($request->all());
     return response()->json($product);
@@ -68,6 +73,9 @@ Route::put('shops/{shop_id}', function (Request $request, $shop_id) {
     if (!DB::table('shops')->where('id', $shop_id)->exists()) {
         return response()->json([], Response::HTTP_NOT_FOUND);
     }
+    $request->validate([
+        'name' => 'filled|max:100',
+    ]);
     $shop = \App\Shop::find($shop_id);
     $shop->update($request->all());
     return response()->json($shop);

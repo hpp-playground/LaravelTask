@@ -30,16 +30,45 @@ tests/Feature/EachIdTest
 
 2. 存在しないproduct_id, shop_idに対して問い合わせを行なった場合,HTTPレスポンス404を返却する
     - api/products/product_idに対してGETメソッドでアクセスした際に404NOT_FOUNDを返却する
-        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByGET()
+        ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByGET()
     - api/products/product_idに対してPUTメソッドでアクセスした際に404NOT_FOUNDを返却する
-        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByPUT()
+        ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByPUT()
     - api/products/product_idに対してDELETEメソッドでアクセスした際に404NOT_FOUNDを返却する
-        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByDELETE()
+        ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByDELETE()
     - api/shops/shop_idに対してGETメソッドでアクセスした際に404NOT_FOUNDを返却する
-        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByGET()
+        ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByGET()
     - api/shops/shop_idに対してPUTメソッドでアクセスした際に404NOT_FOUNDを返却する
-        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByPUT()
+        ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByPUT()
     - api/shops/shop_idに対してDELETEメソッドでアクセスした際に404NOT_FOUNDを返却する
-        thereIsNoResouceOnApiProductsProduct_idAndReturn404ByDELETE()
-    
+        ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByDELETE()
+
     finished all at 7/26 15:15
+
+3. product_id, shop_idに対して不正な値がPUTされた際に,Response::HTTP_UNPROCESSABLE_ENTITYを返却する
+    - 空文字がPUTされるケース
+       - api/products/{$product_id}に対してtitle==空文字がPUTされた時HTTP_UNPROCESSABLE_ENTITYを返却する
+           ifTitleIsNullOnApiProductsProduct_idThenReturn422ByPUT()
+       - api/products/{$product_id}に対してdescription==空文字がPUTされた時HTTP_UNPROCESSABLE_ENTITYを返却する
+           ifDescriptionIsNullOnApiProductsProduct_idThenReturn422ByPUT()
+       - api/products/{$product_id}に対してprice==空文字がPUTされた時HTTP_UNPROCESSABLE_ENTITYを返却する
+           ifPriceIsNullOnApiProductsProduct_idThenReturn422ByPUT()
+       - api/shops/{$shop_id}に対してname==空文字がPUTされた時HTTP_UNPROCESSABLE_ENTITYを返却する
+           ifNameIsNullOnApiProductsProduct_idThenReturn422ByPUT()
+        
+    finished all at 7/26 16:00
+
+    要件を満たさない値がPUTされるケース
+        - api/products/{$product_id}に対して,100文字を超えるtitleがPUTされた時
+            ifTitleIsOver100OnApiProductsProduct_idThenReturn422ByPUT()
+        - api/products/{$product_id}に対して,500文字を超えるtitleがPUTされた時
+            ifDescriptionIsOver500OnApiProductsProduct_idThenReturn422ByPUT()
+        - api/products/{$product_id}に対して,負の値であるpriceがPUTされた時
+            ifPriceOfNegativeIntegerOnApiProductsProduct_idThenReturn422ByPUT()
+        - api/products/{$product_id}に対して,小数のpriceがPUTされた時
+            ifPriceOfFloatOnApiProductsProduct_idThenReturn422ByPUT()
+        - api/products/{$product_id}に対して,数字出ない文字列がpriceとしてPUTされた時
+            ifPriceOfNotNumberOnApiProductsProduct_idThenReturn422ByPUT()
+        - api/shops/{$shop_id}に対して,100文字を超えるnameがPUTされた時
+            ifNameIsOver100OnApiShopsShop_idThenReturn422ByPUT()
+
+    finished all at 7/26 17:00

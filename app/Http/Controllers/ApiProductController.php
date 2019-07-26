@@ -12,7 +12,6 @@ class ApiProductController extends Controller
         return response()->json($productService->getProducts());
     }
 
-
     public function addProduct(Request $request, ApiProductService $productService)
     {
         $request->validate([

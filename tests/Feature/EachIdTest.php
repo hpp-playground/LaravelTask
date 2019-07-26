@@ -113,7 +113,7 @@ class EachIdTest extends TestCase
     /**
     * @test
     */
-    public function thereIsNoResouceOnApiProductsProduct_idAndReturn404ByGET()
+    public function ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByGET()
     {
         $id = DB::table('products')->max('id') + 1;
         $response = $this->get('api/products/'.$id);
@@ -123,7 +123,7 @@ class EachIdTest extends TestCase
     /**
     * @test
     */
-    public function thereIsNoResouceOnApiProductsProduct_idAndReturn404ByPUT()
+    public function ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByPUT()
     {
         $id = DB::table('products')->max('id') + 1;
         $params = [
@@ -136,7 +136,7 @@ class EachIdTest extends TestCase
     /**
     * @test
     */
-    public function thereIsNoResouceOnApiProductsProduct_idAndReturn404ByDELETE()
+    public function ifThereIsNoResouceOnApiProductsProduct_idThenReturn404ByDELETE()
     {
         $id = DB::table('products')->max('id') + 1;
         $response = $this->delete('api/products/'.$id);
@@ -146,7 +146,7 @@ class EachIdTest extends TestCase
     /**
     * @test
     */
-    public function thereIsNoResouceOnApiShopsShop_idAndReturn404ByGET()
+    public function ifThereIsNoResouceOnApiShopsShop_idThenReturn404ByGET()
     {
         $id = DB::table('shops')->max('id') + 1;
         $response = $this->get('api/shops/'.$id);
@@ -156,7 +156,7 @@ class EachIdTest extends TestCase
     /**
     * @test
     */
-    public function thereIsNoResouceOnApiShopsShop_idAndReturn404ByPUT()
+    public function ifThereIsNoResouceOnApiShopsShop_idThenReturn404ByPUT()
     {
         $id = DB::table('shops')->max('id') + 1;
         $params = [
@@ -169,11 +169,162 @@ class EachIdTest extends TestCase
     /**
     * @test
     */
-    public function thereIsNoResouceOnApiShopsShop_idAndReturn404ByDELETE()
+    public function ifThereIsNoResouceOnApiShopsShop_idThenReturn404ByDELETE()
     {
         $id = DB::table('shops')->max('id') + 1;
         $response = $this->delete('api/shops/'.$id);
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+
+    //TODO phase2, 3
+
+    /**
+    * @test
+    */
+    public function ifTitleIsNullOnApiProductsProduct_idThenReturn422ByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => '',
+            'description' => 'description',
+            'price' => 100,
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function ifDescriptionIsNullOnApiProductsProduct_idThenReturn422ByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => 'title',
+            'description' => '',
+            'price' => 100,
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function ifPriceIsNullOnApiProductsProduct_idThenReturn422ByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => 'title',
+            'description' => 'description',
+            'price' => '',
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function ifNameIsNullOnApiShopsShop_idThenReturn422ByPUT()
+    {
+        $id = DB::table('shops')->max('id');
+        $params = [
+            'name' => ''
+        ];
+        $response = $this->putJson('api/shops/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+
+    /**
+    * @test
+    */
+    public function ifTitleIsOver100OnApiProductsProduct_idThenReturn422ByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => str_repeat('title', 50), //250 characters
+            'description' => 'description',
+            'price' => 100,
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function ifDescriptionIsOver500OnApiProductsProduct_idThenReturn422ByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => 'title',
+            'description' => str_repeat('description', 100), //1100 characters
+            'price' => 100,
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function ifPriceOfNegativeIntegerOnApiProductsProduct_idThenReturn422ByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => 'title',
+            'description' => 'description',
+            'price' => -1,
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function ifPriceOfFloatOnApiProductsProduct_idThenReturn422ByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => 'title',
+            'description' => 'description',
+            'price' => 0.1,
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+
+    /**
+    * @test
+    */
+    public function ifPriceOfNotNumberOnApiProductsProduct_idThenReturn422ByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $params = [
+            'title' => 'title',
+            'description' => 'description',
+            'price' => 'price!',
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+    * @test
+    */
+    public function ifNameIsOver100OnApiShopsShop_idThenReturn422ByPUT()
+    {
+        $id = DB::table('shops')->max('id');
+        $params = [
+            'name' => str_repeat('name', 50), //200 characters
+        ];
+        $response = $this->putJson('api/shops/'.$id, $params);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
 }
