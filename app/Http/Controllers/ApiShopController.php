@@ -16,43 +16,41 @@ class ApiShopController extends Controller
 
     public function addShop(Request $request, ApiShopService $shopService)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
-        $name = $request->json('name');
-        $shopService->addShop($name);
+        $request->validate($shopService->addRule);
+        $shopService->addShop($request->all());
     }
 
-    
-    public function getShop($shop_id)
+
+    public function getShop($shop_id, ApiShopService $shopService)
     {
-        if (!\DB::table('shops')->where('id', $shop_id)->exists()) {
+        if (!$this->isExist($shop_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
-        $shop = \App\Shop::find($shop_id,['id','name']);
-        return response()->json($shop);
+        return response()->json($shopService->getShop($shop_id));
     }
 
-    public function updateShop(Request $request, $shop_id)
+
+    public function updateShop(Request $request, $shop_id, ApiShopService $shopService)
     {
-        if (!\DB::table('shops')->where('id', $shop_id)->exists()) {
+        if (!$this->isExist($shop_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
-        $request->validate([
-            'name' => 'filled|max:100',
-        ]);
-        $shop = \App\Shop::find($shop_id);
-        $shop->update($request->all());
-        return response()->json($shop);
+        $request->validate($shopService->updateRule);
+        $shopService->updateShop($shop_id, $request->all());
     }
 
-    public function deleteShop(Request $request, $shop_id)
+
+    public function deleteShop(Request $request, $shop_id, ApiShopService $shopService)
     {
-        if (!\DB::table('shops')->where('id', $shop_id)->exists()) {
+        if (!$this->isExist($shop_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
-        $shop = \App\Shop::find($shop_id);
-        $shop->delete();
-        return response()->json($shop);
+        $shopService->deleteShop($shop_id);
+    }
+
+
+    public function isExist($shop_id)
+    {
+        return \DB::table('shops')->where('id', $shop_id)->exists();
     }
 }

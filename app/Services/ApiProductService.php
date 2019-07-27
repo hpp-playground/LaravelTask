@@ -35,13 +35,13 @@ class ApiProductService
 
     public function updateProduct($product_id, $product_params)
     {
-        $product = \App\Product::find($product_id);
+        $product = Product::find($product_id);
         $product->update($product_params);
     }
 
     public function deleteProduct($product_id)
     {
-        $product = \App\Product::find($product_id);
+        $product = Product::find($product_id);
         $product->delete();
     }
 
