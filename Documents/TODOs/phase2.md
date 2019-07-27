@@ -72,3 +72,9 @@ tests/Feature/EachIdTest
             ifNameIsOver100OnApiShopsShop_idThenReturn422ByPUT()
 
     finished all at 7/26 17:00
+
+4. 各idに対するGET,PUT,DELETEメソッドによるアクセスに対応する処理をコントローラへ委譲する
+
+    finished all at 7/27 9:00
+
+5. 各コントローラ内の処理をコントローラとサービスに分割する

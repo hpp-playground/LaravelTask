@@ -13,51 +13,45 @@ class ApiProductController extends Controller
         return response()->json($productService->getProducts());
     }
 
+
     public function addProduct(Request $request, ApiProductService $productService)
     {
-        $request->validate([
-            'title' => 'required|max:100',
-            'description' => 'required|max:500',
-            'price' => 'required|integer|min:0'
-        ]);
-        $title          = $request->json('title');
-        $description    = $request->json('description');
-        $price          = $request->json('price');
-        $productService->addProduct($title, $description, $price);
+        $request->validate($productService->addRule);
+        $productService->addProduct($request->all()); //$request->all() = [title,description,price]
     }
 
-    public function getProduct($product_id)
+
+    public function getProduct($product_id, ApiProductService $productService)
     {
-        if (!\DB::table('products')->where('id', $product_id)->exists()) {
+        if (!$this->isExist($product_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
-        $product = \App\Product::find($product_id,['title','description','price']);
-        return response()->json($product);
+        return response()->json($productService->getProduct($product_id));
     }
 
-    public function updateProduct(Request $request, $product_id)
+
+    public function updateProduct(Request $request, $product_id, ApiProductService $productService)
     {
-        if (!\DB::table('products')->where('id', $product_id)->exists()) {
+        if (!$this->isExist($product_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
-        $request->validate([
-            'title' => 'filled|max:100',
-            'description' => 'filled|max:500',
-            'price' => 'filled|integer|min:0'
-        ]);
-        $product = \App\Product::find($product_id);
-        $product->update($request->all());
-        return response()->json($product);
+        $request->validate($productService->updateRule);
+        $productService->updateProduct($product_id, $request->all());
     }
 
-    public function deleteProduct(Request $request, $product_id)
+
+    public function deleteProduct(Request $request, $product_id, ApiProductService $productService)
     {
-        if (!\DB::table('products')->where('id', $product_id)->exists()) {
+        if (!$this->isExist($product_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
-        $product = \App\Product::find($product_id);
-        $product->delete();
-        return response()->json($product);
+        $productService->deleteProduct($product_id);
+    }
+
+
+    public function isExist($product_id)
+    {
+        return \DB::table('products')->where('id', $product_id)->exists();
     }
 
 }

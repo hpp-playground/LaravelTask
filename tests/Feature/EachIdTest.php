@@ -38,7 +38,7 @@ class EachIdTest extends TestCase
         $id = DB::table('products')->max('id');
         $response = $this->get('api/products/'.$id);
         $product = $response->json();
-        $this->assertSame(['title', 'description','price'], array_keys($product));
+        $this->assertSame(['id','title', 'description','price'], array_keys($product));
     }
 
     /**
@@ -82,7 +82,7 @@ class EachIdTest extends TestCase
         $id = DB::table('shops')->max('id');
         $response = $this->get('api/shops/'.$id);
         $shop = $response->json();
-        $this->assertSame(['name'], array_keys($shop));
+        $this->assertSame(['id','name'], array_keys($shop));
     }
 
     /**

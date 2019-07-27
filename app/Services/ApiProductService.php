@@ -6,18 +6,43 @@ use App\Product;
 
 class ApiProductService
 {
+    public $addRule = [
+        'title' => 'required|max:100',
+        'description' => 'required|max:500',
+        'price' => 'required|integer|min:0'
+    ];
+
+    public $updateRule = [
+        'title' => 'filled|max:100',
+        'description' => 'filled|max:500',
+        'price' => 'filled|integer|min:0'
+    ];
+
     public function getProducts()
     {
         return Product::query()->select(['id', 'title', 'description', 'price'])->get();
     }
 
-    public function addProduct($title, $description, $price)
+    public function addProduct($product_params)
     {
-        $product = new Product();
-        $product->title = $title;
-        $product->description = $description;
-        $product->price = $price;
-        $product->save();
+        Product::create($product_params);
+    }
+
+    public function getProduct($product_id)
+    {
+      return Product::find($product_id,['id','title','description','price']);
+    }
+
+    public function updateProduct($product_id, $product_params)
+    {
+        $product = \App\Product::find($product_id);
+        $product->update($product_params);
+    }
+
+    public function deleteProduct($product_id)
+    {
+        $product = \App\Product::find($product_id);
+        $product->delete();
     }
 
 }
