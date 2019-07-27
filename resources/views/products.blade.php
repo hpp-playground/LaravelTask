@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    @inject('productService', 'App\Services\ApiProductService')
     @include('Product.productsList')
     @include('Product.productAddForm')
     <a href="{{ url('/') }}">TOPへ</a>

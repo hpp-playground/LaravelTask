@@ -1,5 +1,3 @@
-@inject('productService', 'App\Services\ApiProductService')
-
 <h1>商品一覧</h1>
 <table>
     <tr>

@@ -18,6 +18,7 @@ class ApiProductController extends Controller
     {
         $request->validate($productService->addRule);
         $productService->addProduct($request->all()); //$request->all() = [title,description,price]
+        return redirect(url()->previous());
     }
 
 
@@ -37,6 +38,7 @@ class ApiProductController extends Controller
         }
         $request->validate($productService->updateRule);
         $productService->updateProduct($product_id, $request->all());
+        return redirect(url()->previous());
     }
 
 
@@ -46,6 +48,7 @@ class ApiProductController extends Controller
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         $productService->deleteProduct($product_id);
+        return redirect(url()->previous());
     }
 
 

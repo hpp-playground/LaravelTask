@@ -40,7 +40,7 @@ class AccessTest extends TestCase
             'price' => 100,
         ];
         $response = $this->postJson('api/products', $params);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 
 
@@ -64,7 +64,7 @@ class AccessTest extends TestCase
             'title' => 'title',
         ];
         $response = $this->putJson('api/products/'.$id, $params);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 
     /**
@@ -74,7 +74,7 @@ class AccessTest extends TestCase
     {
         $id = DB::table('products')->max('id');
         $response = $this->delete('api/products/'.$id);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 
     /**
@@ -95,7 +95,7 @@ class AccessTest extends TestCase
             'name' => 'name',
         ];
         $response = $this->postJson('api/shops', $params);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 
 
@@ -119,7 +119,7 @@ class AccessTest extends TestCase
             'name' => 'name'
         ];
         $response = $this->putJson('api/shops/'.$id, $params);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 
     /**
@@ -129,7 +129,7 @@ class AccessTest extends TestCase
     {
         $id = DB::table('shops')->max('id');
         $response = $this->delete('api/shops/'.$id);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 
     //TODOs phase1, 4

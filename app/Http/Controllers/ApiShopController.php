@@ -18,6 +18,7 @@ class ApiShopController extends Controller
     {
         $request->validate($shopService->addRule);
         $shopService->addShop($request->all());
+        return redirect(url()->previous());
     }
 
 
@@ -37,6 +38,7 @@ class ApiShopController extends Controller
         }
         $request->validate($shopService->updateRule);
         $shopService->updateShop($shop_id, $request->all());
+        return redirect(url()->previous());
     }
 
 
@@ -46,6 +48,7 @@ class ApiShopController extends Controller
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         $shopService->deleteShop($shop_id);
+        return redirect(url()->previous());
     }
 
 

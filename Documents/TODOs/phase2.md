@@ -78,3 +78,5 @@ tests/Feature/EachIdTest
     finished all at 7/27 9:00
 
 5. 各コントローラ内の処理をコントローラとサービスに分割する
+    
+    finished all at 7/27 10:00
