@@ -1,5 +1,3 @@
-@inject('shopService', 'App\Services\ApiShopService')
-
 <h1>店舗一覧</h1>
 <table>
     <tr>
