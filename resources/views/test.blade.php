@@ -7,9 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    @inject('productService', 'App\Services\ApiProductService')
-    @inject('shopService', 'App\Services\ApiShopService')
-    @component('Product.productsList', ['products' => $productService->getProducts()])@endcomponent
-    @component('Shop.shopsList', ['shops' => $shopService->getShops()])@endcomponent
+    @component('Product.productsList')@endcomponent
+    @component('Shop.shopsList')@endcomponent
 </body>
 </html>
