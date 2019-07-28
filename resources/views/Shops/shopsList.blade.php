@@ -5,7 +5,7 @@
     </tr>
     @foreach ($shopService->getShops() as $shop)
     <tr>
-        <td>{{ $shop->name }}</td>
+        <td><a href="{{ url()->current() }}/{{ $shop->id }}">{{ $shop->name }}</a></td>
     </tr>
     @endforeach
 </table>

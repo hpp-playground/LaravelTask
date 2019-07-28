@@ -22,3 +22,9 @@ Route::get('/shops', function () {
     return view('shops');
 });
 
+Route::get('/products/{product_id}', function ($product_id) {
+    return view('product', compact('product_id'));
+});
+Route::get('/shops/{shop_id}', function ($shop_id) {
+    return view('shop', compact('shop_id'));
+});

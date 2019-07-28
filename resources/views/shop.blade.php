@@ -8,9 +8,7 @@
 </head>
 <body>
     @inject('shopService', 'App\Services\ApiShopService')
-    @include('Shops.shopsList')
-    @include('Shops.shopAddForm')
-    <a href="{{ url('/') }}">TOPへ</a>
-    <a href="{{ url('products') }}">商品一覧</a>
+    <h1>店舗詳細</h1>
+    @include('Shops.shopDetail', ['shop_id' => $shop_id])
 </body>
 </html>

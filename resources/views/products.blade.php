@@ -8,8 +8,8 @@
 </head>
 <body>
     @inject('productService', 'App\Services\ApiProductService')
-    @include('Product.productsList')
-    @include('Product.productAddForm')
+    @include('Products.productsList')
+    @include('Products.productAddForm')
     <a href="{{ url('/') }}">TOPへ</a>
     <a href="{{ url('shops') }}">店舗一覧</a>
 </body>

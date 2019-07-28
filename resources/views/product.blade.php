@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    @inject('shopService', 'App\Services\ApiShopService')
-    @include('Shops.shopsList')
-    @include('Shops.shopAddForm')
-    <a href="{{ url('/') }}">TOPへ</a>
-    <a href="{{ url('products') }}">商品一覧</a>
+    @inject('productService', 'App\Services\ApiProductService')
+    <h1>商品詳細</h1>
+    @include('Products.productDetail', ['product_id' => $product_id])
 </body>
 </html>

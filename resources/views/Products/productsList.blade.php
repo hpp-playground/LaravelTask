@@ -7,7 +7,7 @@
     </tr>
     @foreach ($productService->getProducts() as $product)
     <tr>
-        <td>{{ $product->title }}</td>
+        <td><a href="{{ url()->current() }}/{{ $product->id }}">{{ $product->title }}</a></td>
         <td>{{ $product->description }}</td>
         <td>{{ $product->price }}円</td>
     </tr>
