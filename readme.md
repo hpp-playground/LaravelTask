@@ -1,6 +1,9 @@
 # Laravel Task
 
 Laravelを用いた課題用リポジトリです.仕様は以下の通り.
+URLは
+http://laraveltaskproject.herokuapp.com
+フレームワークとしてLaravel5.8を使用
 
 ## 機能とAPIエンドポイント
 
