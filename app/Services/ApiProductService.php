@@ -9,13 +9,15 @@ class ApiProductService
     public $addRule = [
         'title' => 'required|max:100',
         'description' => 'required|max:500',
-        'price' => 'required|integer|min:0'
+        'price' => 'required|integer|min:0',
+        'image' => 'required|image',
     ];
 
     public $updateRule = [
         'title' => 'filled|max:100',
         'description' => 'filled|max:500',
-        'price' => 'filled|integer|min:0'
+        'price' => 'filled|integer|min:0',
+        'image' => 'filled|image',
     ];
 
     public function getProducts()
@@ -43,6 +45,11 @@ class ApiProductService
     {
         $product = Product::find($product_id);
         $product->delete();
+    }
+
+    public function saveImage($image)
+    {
+        $image->store('public/temp');
     }
 
 }

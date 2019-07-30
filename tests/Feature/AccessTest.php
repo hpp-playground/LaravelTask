@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use DB;
 use \Illuminate\Http\Response;
 
@@ -38,6 +39,7 @@ class AccessTest extends TestCase
             'title' => 'title',
             'description' => 'description',
             'price' => 100,
+            'image' => UploadedFile::fake()->image('test.jpg'),
         ];
         $response = $this->postJson('api/products', $params);
         $response->assertStatus(302);
@@ -199,7 +201,10 @@ class AccessTest extends TestCase
             'description' => 'おいしい飲み物',
             'price' => 430,
         ];
-        $this->postJson('api/products', $params);
+        $imageparam = [
+            'image' => UploadedFile::fake()->image('test.jpg'),
+        ];
+        $this->postJson('api/products', $params+$imageparam);
         $this->assertDatabaseHas('products', $params);
     }
 

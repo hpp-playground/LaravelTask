@@ -15,3 +15,7 @@
     - api/shops/shop_idに対して正常なデータでDELETEを行なった場合、レスポンスコード302が返却される
 
     finished all at 7/27 23:30
+
+4. 画像投稿機能を実装
+    - view部分に画像投稿用フォームを作成する
+    - ApiProductsService@addProduct()内で画像を商品idと一意に紐づくように保存するように変更

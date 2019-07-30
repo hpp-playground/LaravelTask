@@ -17,7 +17,8 @@ class ApiProductController extends Controller
     public function addProduct(Request $request, ApiProductService $productService)
     {
         $request->validate($productService->addRule);
-        $productService->addProduct($request->all()); //$request->all() = [title,description,price]
+        $productService->addProduct($request->except('image')); //$request->all() = [title,description,price,image]
+        $productService->saveImage($request->file('image'));
         return redirect(url()->previous());
     }
 
