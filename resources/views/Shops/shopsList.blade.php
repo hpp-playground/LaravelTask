@@ -6,6 +6,7 @@
     @foreach ($shopService->getShops() as $shop)
     <tr>
         <td><a href="{{ url()->current() }}/{{ $shop->id }}">{{ $shop->name }}</a></td>
+        <td><img src="{{ $shop->imageUrl }}" width="200" /></td>
     </tr>
     @endforeach
 </table>

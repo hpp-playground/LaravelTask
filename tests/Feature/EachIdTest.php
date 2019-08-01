@@ -219,9 +219,6 @@ class EachIdTest extends TestCase
     }
 
 
-    /**
-    * @test
-    */
     public function ifNameIsNullOnApiShopsShop_idThenReturn422ByPUT()
     {
         $id = DB::table('shops')->max('id');

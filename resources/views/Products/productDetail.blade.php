@@ -17,5 +17,4 @@
     <button type='submit' name='action' value='send'>削除</button>
 </form>
 
-
 <a href='/products'>戻る</a>
