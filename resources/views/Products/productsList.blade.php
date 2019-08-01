@@ -10,6 +10,7 @@
         <td><a href="{{ url()->current() }}/{{ $product->id }}">{{ $product->title }}</a></td>
         <td>{{ $product->description }}</td>
         <td>{{ $product->price }}円</td>
+        <td><img src="{{ $product->imageUrl }}" width="200" /></td>
     </tr>
     @endforeach
 </table>

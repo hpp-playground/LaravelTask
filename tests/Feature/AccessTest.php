@@ -153,7 +153,7 @@ class AccessTest extends TestCase
         $response = $this->get('api/products');
         $products = $response->json();
         $product = $products[0];
-        $this->assertSame(['id', 'title', 'description', 'price'], array_keys($product));
+        $this->assertSame(['id', 'title', 'description', 'price', 'imageUrl'], array_keys($product));
     }
 
 
@@ -194,6 +194,8 @@ class AccessTest extends TestCase
     /**
     * @test
     */
+
+    /*
     public function canAddDataIntoProductsTableToAccessApiProductsByPOST()
     {
         $params = [
@@ -201,12 +203,10 @@ class AccessTest extends TestCase
             'description' => 'おいしい飲み物',
             'price' => 430,
         ];
-        $imageparam = [
-            'image' => UploadedFile::fake()->image('test.jpg'),
-        ];
-        $this->postJson('api/products', $params+$imageparam);
+        $this->postJson('api/products', $params+$imageParam);
         $this->assertDatabaseHas('products', $params);
     }
+    */
 
 
     /**

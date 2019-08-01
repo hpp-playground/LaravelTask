@@ -17,8 +17,8 @@ class ApiProductController extends Controller
     public function addProduct(Request $request, ApiProductService $productService)
     {
         $request->validate($productService->addRule);
-        $productService->addProduct($request->except('image')); //$request->all() = [title,description,price,image]
-        $productService->saveImage($request->file('image'));
+        $productService->addProduct($request->all()); //$request->all() = [title,description,price,image]
+        //redirectを返さないとクライアントの画面が真っ白になる(POSTでsubmitするとviewを返さないといけない)
         return redirect(url()->previous());
     }
 
@@ -49,7 +49,7 @@ class ApiProductController extends Controller
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         $productService->deleteProduct($product_id);
-        return redirect(url()->previous());
+        return redirect('/products');
     }
 
 

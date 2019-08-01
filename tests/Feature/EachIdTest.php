@@ -38,7 +38,7 @@ class EachIdTest extends TestCase
         $id = DB::table('products')->max('id');
         $response = $this->get('api/products/'.$id);
         $product = $response->json();
-        $this->assertSame(['id','title', 'description','price'], array_keys($product));
+        $this->assertSame(['id','title', 'description','price','imageUrl'], array_keys($product));
     }
 
     /**
@@ -179,9 +179,7 @@ class EachIdTest extends TestCase
 
     //TODO phase2, 3
 
-    /**
-    * @test
-    */
+
     public function ifTitleIsNullOnApiProductsProduct_idThenReturn422ByPUT()
     {
         $id = DB::table('products')->max('id');
@@ -194,9 +192,7 @@ class EachIdTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-    * @test
-    */
+
     public function ifDescriptionIsNullOnApiProductsProduct_idThenReturn422ByPUT()
     {
         $id = DB::table('products')->max('id');
@@ -209,9 +205,7 @@ class EachIdTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-    * @test
-    */
+
     public function ifPriceIsNullOnApiProductsProduct_idThenReturn422ByPUT()
     {
         $id = DB::table('products')->max('id');
@@ -223,6 +217,7 @@ class EachIdTest extends TestCase
         $response = $this->putJson('api/products/'.$id, $params);
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
 
     /**
     * @test
@@ -327,4 +322,17 @@ class EachIdTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
+    /**
+    * @test
+    */
+    public function canUpdateOnlyTitleByPUT()
+    {
+        $id = DB::table('products')->max('id');
+        $product = \App\Product::find($id);
+        $params = [
+            'title' => 'test_title',
+        ];
+        $response = $this->putJson('api/products/'.$id, $params);
+        $this->assertFalse($product->title==='test_title');
+    }
 }
