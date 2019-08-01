@@ -12,14 +12,14 @@ class ApiProductService
         'title' => 'required|max:100',
         'description' => 'required|max:500',
         'price' => 'required|integer|min:0',
-        'image' => 'required|image',
+        'image' => 'required|image|max:10240',
     ];
 
     public $updateRule = [
         'title' => 'nullable|max:100',
         'description' => 'nullable|max:500',
         'price' => 'nullable|integer|min:0',
-        'image' => 'nullable|image',
+        'image' => 'nullable|image|max:10240',
     ];
 
     public function getProducts()
