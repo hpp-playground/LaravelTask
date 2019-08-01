@@ -35,6 +35,7 @@ productおよびshopに関するデータベース定義は以下の通り。
 |title|varchar(100)|商品タイトル|
 |description|varchar(500)|商品説明|
 |price|integer|商品価格|
+|imageUrl|varchar|画像URL|
 |created_at|timestamp|作成日時|
 |updated_at|timestamp|更新日時|
 
@@ -45,6 +46,7 @@ productおよびshopに関するデータベース定義は以下の通り。
 |-|-|-|
 |id|AUTO_INCREMENT|-|
 |name|varchar(100)|店舗名|
+|imageUrl|varchar|画像URL|
 |created_at|timestamp|作成日時|
 |updated_at|timestamp|更新日時|
 
