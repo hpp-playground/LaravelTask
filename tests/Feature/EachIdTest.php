@@ -82,7 +82,7 @@ class EachIdTest extends TestCase
         $id = DB::table('shops')->max('id');
         $response = $this->get('api/shops/'.$id);
         $shop = $response->json();
-        $this->assertSame(['id','name'], array_keys($shop));
+        $this->assertSame(['id','name','imageUrl'], array_keys($shop));
     }
 
     /**
@@ -219,9 +219,6 @@ class EachIdTest extends TestCase
     }
 
 
-    /**
-    * @test
-    */
     public function ifNameIsNullOnApiShopsShop_idThenReturn422ByPUT()
     {
         $id = DB::table('shops')->max('id');

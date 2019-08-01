@@ -26,6 +26,7 @@ class Shop extends Model
 
     protected $fillable= [
         'name',
+        'imageUrl'
     ];
 
     public function products()
