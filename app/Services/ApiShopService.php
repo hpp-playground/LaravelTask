@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Shop;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class ApiShopService
 {
@@ -12,8 +14,8 @@ class ApiShopService
     ];
 
     public $updateRule = [
-        'name' => 'filled|max:100',
-        'image' => 'required|image|max:10240'
+        'name' => 'nullable|max:100',
+        'image' => 'nullable|image|max:10240'
     ];
 
 
@@ -24,24 +26,35 @@ class ApiShopService
 
     public function addShop($shop_params)
     {
+        $imageUrl = $this->saveImageReturnUrl($shop_params['image']);
+        unset($shop_params['image']);
+        $shop_params += ['imageUrl' => $imageUrl];
         Shop::create($shop_params);
     }
 
     public function getShop($shop_id)
     {
-        return Shop::find($shop_id,['id','name']);
+        return Shop::find($shop_id,['id','name','imageUrl']);
     }
 
     public function updateShop($shop_id, $shop_params)
     {
         $shop = Shop::find($shop_id);
+        $shop_params = $this->deleteKeyHasNothing($shop_params);
+        if (array_key_exists('image', $shop_params)) {
+            $imageUrl = $this->saveImageReturnUrl($shop_params['image']);
+            unset($shop_params['image']);
+            $shop_params += ['imageUrl' => $imageUrl];
+        }
         $shop->update($shop_params);
     }
 
     public function deleteShop($shop_id)
     {
         $shop = Shop::find($shop_id);
+        $imageUrl = $shop->imageUrl;
         $shop->delete();
+        $this->deleteImage($imageUrl);
     }
 
     public function saveImageReturnUrl($image)

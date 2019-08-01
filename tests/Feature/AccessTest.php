@@ -95,6 +95,7 @@ class AccessTest extends TestCase
     {
         $params = [
             'name' => 'name',
+            'image' => UploadedFile::fake()->image('test.jpg'),
         ];
         $response = $this->postJson('api/shops', $params);
         $response->assertStatus(302);
@@ -176,7 +177,7 @@ class AccessTest extends TestCase
         $response = $this->get('api/shops');
         $shops = $response->json();
         $shop = $shops[0];
-        $this->assertSame(['id', 'name'], array_keys($shop));
+        $this->assertSame(['id', 'name','imageUrl'], array_keys($shop));
     }
 
 
