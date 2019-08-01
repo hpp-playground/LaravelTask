@@ -5,9 +5,12 @@ namespace App\Services;
 use App\Product;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use App\Services\StorageService;
+use App\Services\UtilityService;
 
 class ApiProductService
 {
+    //商品を追加するときにnull値は認めない
     public $addRule = [
         'title' => 'required|max:100',
         'description' => 'required|max:500',
@@ -15,6 +18,7 @@ class ApiProductService
         'image' => 'required|image|max:10240',
     ];
 
+    //更新時はnull部分は変化なし,値が入っていればその値に更新する
     public $updateRule = [
         'title' => 'nullable|max:100',
         'description' => 'nullable|max:500',
@@ -29,9 +33,8 @@ class ApiProductService
 
     public function addProduct($product_params)
     {
-        $imageUrl = $this->saveImageReturnUrl($product_params['image']);
-        unset($product_params['image']);
-        $product_params += ['imageUrl' => $imageUrl];
+        $imageUrl = StorageService::saveImageReturnUrl($product_params['image']);
+        $product_params = UtilityService::removeImageAppendImageUrl($product_params, $imageUrl);
         //createに連想配列を投げるとそのKeyのカラムに値を保存してくれる
         //元の$product_paramsは[title,description,price,image]なのでそれをカラム定義に合わせて削除・結合
         Product::create($product_params);
@@ -46,12 +49,13 @@ class ApiProductService
     {
         //$request内の存在する更新値がtitleしかない場合,$request->all()=['title'=>$title]という状態になっている
         $product = Product::find($product_id);
-        $product_params = $this->deleteKeyHasNothing($product_params);
-        //画像保存はKey:imageが存在している時だけにしたい
+        $product_params = UtilityService::deleteKeyHavingNoValue($product_params);
+        //画像保存はKey:imageが存在している時だけ
         if (array_key_exists('image', $product_params)) {
-            $imageUrl = $this->saveImageReturnUrl($product_params['image']);
-            unset($product_params['image']);
-            $product_params += ['imageUrl' => $imageUrl];
+            //imageを更新するなら元からある画像を削除して新しい画像を保存する
+            StorageService::deleteImage($product->imageUrl);
+            $imageUrl = StorageService::saveImageReturnUrl($product_params['image']);
+            $product_params = UtilityService::removeImageAppendImageUrl($product_params);
         }
         $product->update($product_params);
     }
@@ -61,40 +65,7 @@ class ApiProductService
         $product = Product::find($product_id);
         $imageUrl = $product->imageUrl;
         $product->delete();
-        $this->deleteImage($imageUrl);
+        StorageService::deleteImage($imageUrl);
     }
-
-    public function saveImageReturnUrl($image)
-    {
-        $contents = file_get_contents($image->getRealPath());
-        $disk = Storage::disk('s3');
-        //S3に保存する際,$imageの内容に基づいてhash値を生成
-        //衝突防止のためファイル名の先頭にyyyy-mm-dd hh:mm:ss形式の時間データをつけておく
-        $imageName = Carbon::now().$image->hashName();
-        $disk->put($imageName, $contents,'public');
-        $imageUrl = $disk->url($imageName);
-        //DBにURLを保存するために,S3ストレージ上のURLを返す
-        return $imageUrl;
-    }
-
-    public function deleteImage($imageUrl)
-    {
-        $disk = Storage::disk('s3');
-        $imageNameEncoded = pathinfo($imageUrl)['basename'];
-        //pathinfoで得られるファイル名はURLエンコードされているのでデコード
-        $imageName = urldecode($imageNameEncoded);
-        $disk->delete($imageName);
-    }
-
-    public function deleteKeyHasNothing($product_params)
-    {
-        foreach (array_keys($product_params) as $key) {
-            if (empty($product_params[$key])) {
-                unset($product_params[$key]);
-            }
-        }
-        return $product_params;
-    }
-
 }
 

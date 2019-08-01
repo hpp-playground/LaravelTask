@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Services\ApiProductService;
+use App\Services\UtilityService;
 
 class ApiProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ApiProductController extends Controller
 
     public function getProduct($product_id, ApiProductService $productService)
     {
-        if (!$this->isExist($product_id)) {
+        if (!UtilityService::isExistInTable('products',$product_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         return response()->json($productService->getProduct($product_id));
@@ -34,7 +35,7 @@ class ApiProductController extends Controller
 
     public function updateProduct(Request $request, $product_id, ApiProductService $productService)
     {
-        if (!$this->isExist($product_id)) {
+        if (!UtilityService::isExistInTable('products',$product_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         $request->validate($productService->updateRule);
@@ -45,17 +46,11 @@ class ApiProductController extends Controller
 
     public function deleteProduct(Request $request, $product_id, ApiProductService $productService)
     {
-        if (!$this->isExist($product_id)) {
+        if (!UtilityService::isExistInTable('products',$product_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         $productService->deleteProduct($product_id);
         return redirect('/products');
-    }
-
-
-    public function isExist($product_id)
-    {
-        return \DB::table('products')->where('id', $product_id)->exists();
     }
 
 }

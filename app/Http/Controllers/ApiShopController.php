@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Services\ApiShopService;
+use App\Services\UtilityService;
 
 class ApiShopController extends Controller
 {
@@ -24,7 +25,7 @@ class ApiShopController extends Controller
 
     public function getShop($shop_id, ApiShopService $shopService)
     {
-        if (!$this->isExist($shop_id)) {
+        if (!UtilityService::isExistInTable('shops',$shop_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         return response()->json($shopService->getShop($shop_id));
@@ -33,7 +34,7 @@ class ApiShopController extends Controller
 
     public function updateShop(Request $request, $shop_id, ApiShopService $shopService)
     {
-        if (!$this->isExist($shop_id)) {
+        if (!UtilityService::isExistInTable('shops',$shop_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         $request->validate($shopService->updateRule);
@@ -44,16 +45,10 @@ class ApiShopController extends Controller
 
     public function deleteShop(Request $request, $shop_id, ApiShopService $shopService)
     {
-        if (!$this->isExist($shop_id)) {
+        if (!UtilityService::isExistInTable('shops',$shop_id)) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         $shopService->deleteShop($shop_id);
         return redirect('/shops');
-    }
-
-
-    public function isExist($shop_id)
-    {
-        return \DB::table('shops')->where('id', $shop_id)->exists();
     }
 }
