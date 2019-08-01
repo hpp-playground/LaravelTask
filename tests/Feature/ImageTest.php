@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use DB;
 use \Illuminate\Http\Response;
-
+use App\Services\StorageService;
 
 class ImageTest extends TestCase
 {
@@ -28,10 +28,10 @@ class ImageTest extends TestCase
     {
         $disk = Storage::disk('s3');
         $image = UploadedFile::fake()->image('test.jpg');
-        $imageUrl = (new \App\Services\ApiProductService())->saveImageReturnUrl($image);
+        $imageUrl = StorageService::saveImageReturnUrl($image);
         $imageName = urldecode(pathinfo($imageUrl)['basename']);
         $isStored = $disk->exists($imageName);
-        (new \App\Services\ApiProductService())->deleteImage($imageUrl);
+        StorageService::deleteImage($imageUrl);
         $isDeleted = (! $disk->exists($imageName));
         $this->assertTrue($isStored&&$isDeleted);
     }
