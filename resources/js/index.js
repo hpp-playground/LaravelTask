@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import LaravelApp from './components/LaravelApp'
+import LaravelApp from './LaravelApp'
 
 ReactDOM.render(<LaravelApp />, document.getElementById('root'));

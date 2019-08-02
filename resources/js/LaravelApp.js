@@ -5,11 +5,11 @@ import {
     Link,
     Switch
 } from 'react-router-dom'
-import Home from './Home'
-import ProductsList from './ProductsList'
-import ProductCard from './ProductCard'
-import ShopsList from './ShopsList'
-import ShopCard from './ShopCard'
+import Home from './components/Home'
+import ProductsList from './components/ProductsList'
+import ProductCard from './components/ProductCard'
+import ShopsList from './components/ShopsList'
+import ShopCard from './components/ShopCard'
 
 
 const LaravelApp = () => (
