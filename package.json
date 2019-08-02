@@ -12,7 +12,11 @@
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
         "axios": "^0.18",
+        "babel-eslint": "^10.0.2",
         "cross-env": "^5.1",
+        "eslint": "^6.1.0",
+        "eslint-config-google": "^0.13.0",
+        "eslint-plugin-react": "^7.14.3",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.5",
         "react": "^16.2.0",
@@ -25,6 +29,7 @@
         "react-redux": "^7.1.0",
         "react-router-dom": "^5.0.1",
         "redux": "^4.0.4",
-        "redux-saga": "^1.0.5"
+        "redux-saga": "^1.0.5",
+        "styled-components": "^4.3.2"
     }
 }
