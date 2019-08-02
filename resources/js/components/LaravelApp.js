@@ -1,11 +1,27 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Switch
+} from 'react-router-dom'
+import Home from './Home'
+import ProductsList from './ProductsList'
+import ProductCard from './ProductCard'
+import ShopsList from './ShopsList'
+import ShopCard from './ShopCard'
 
-export default class LaravelApp extends Component {
-    render() {
-        return (
-            <div>LaravelApp</div>
-        );
-    }
-}
-ReactDOM.render(<LaravelApp />, document.getElementById('root'));
+
+const LaravelApp = () => (
+    <Router>
+        <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/products' component={ProductsList} />
+            <Route exact path='/products/:id' component={ProductCard} />
+            <Route exact path="/shops" component={ShopsList} />
+            <Route exact path="/shops/:id" component={ShopCard} />
+        </Switch>
+    </Router>
+)
+
+export default LaravelApp
