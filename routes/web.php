@@ -11,6 +11,12 @@
 |
 */
 
+Route::get('/{any}', function(){
+    return view('welcome');
+})->where('any','.*');
+
+
+/*
 Route::get('/', function () {
     return view('root');
 });
@@ -28,3 +34,4 @@ Route::get('/products/{product_id}', function ($product_id) {
 Route::get('/shops/{shop_id}', function ($shop_id) {
     return view('shop', compact('shop_id'));
 });
+*/

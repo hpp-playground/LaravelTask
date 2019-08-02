@@ -20,5 +20,11 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0"
+    },
+    "dependencies": {
+        "react-redux": "^7.1.0",
+        "react-router-dom": "^5.0.1",
+        "redux": "^4.0.4",
+        "redux-saga": "^1.0.5"
     }
 }
