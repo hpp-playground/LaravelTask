@@ -1,10 +1,11 @@
 import React, {Component, Fragment} from 'react'
+import {Link} from 'react-router-dom'
 
 const RenderRows = (props) => {
     return props.products.map(product => {
         return (
             <tr key={product.id}>
-                <td>{product.title}</td>
+                <td><Link to={`/products/${product.id}`}>{product.id}</Link></td>
                 <td>{product.description}</td>
                 <td>{product.price}</td>
                 <td><img src={product.imageUrl} /></td>

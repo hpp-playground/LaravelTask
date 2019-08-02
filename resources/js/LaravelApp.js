@@ -10,10 +10,13 @@ import ProductsList from './components/ProductsList'
 import ProductCard from './components/ProductCard'
 import ShopsList from './components/ShopsList'
 import ShopCard from './components/ShopCard'
+import Header from './Header'
+import Footer from './Footer'
 
 
 const LaravelApp = () => (
     <Router>
+        <Header />
         <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/products' component={ProductsList} />
@@ -21,6 +24,7 @@ const LaravelApp = () => (
             <Route exact path="/shops" component={ShopsList} />
             <Route exact path="/shops/:id" component={ShopCard} />
         </Switch>
+        <Footer />
     </Router>
 )
 
