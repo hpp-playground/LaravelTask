@@ -48247,9 +48247,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -48265,9 +48265,16 @@ var RenderRows = function RenderRows(props) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/shops/".concat(shop.id)
     }, shop.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: shop.imageUrl
+      src: shop.imageUrl,
+      width: "200"
     })));
   });
+};
+
+var RenderTable = function RenderTable(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderRows, {
+    shops: props.shops
+  })));
 };
 
 var ShopsList =
@@ -48282,14 +48289,25 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShopsList).call(this));
     _this.state = {
-      shops: []
+      shops: [],
+      image: '',
+      imagePreviewUrl: ''
     };
+    _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
+    _this.inputFileChange = _this.inputFileChange.bind(_assertThisInitialized(_this));
+    _this.addShop = _this.addShop.bind(_assertThisInitialized(_this));
+    _this.getShops = _this.getShops.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(ShopsList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.getShops();
+    }
+  }, {
+    key: "getShops",
+    value: function getShops() {
       var _this2 = this;
 
       axios.get('/api/shops').then(function (res) {
@@ -48301,11 +48319,80 @@ function (_Component) {
       });
     }
   }, {
+    key: "inputChange",
+    value: function inputChange(event) {
+      this.setState({
+        name: event.target.value
+      });
+    }
+  }, {
+    key: "inputFileChange",
+    value: function inputFileChange(event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      var reader = new FileReader();
+      var image = event.target.files[0];
+
+      reader.onloadend = function () {
+        _this3.setState({
+          image: image,
+          imagePreviewUrl: reader.result
+        });
+      };
+
+      reader.readAsDataURL(image);
+    }
+  }, {
+    key: "addShop",
+    value: function addShop() {
+      var _this4 = this;
+
+      var params = new FormData();
+      params.append('name', this.state.name);
+      params.append('image', this.state.image);
+      axios.post('/api/shops', params, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      }).then(function (res) {
+        console.log('res');
+        console.log(res);
+
+        _this4.setState({
+          name: '',
+          image: '',
+          imagePreviewUrl: ''
+        });
+
+        _this4.getShops();
+      })["catch"](function (error) {
+        console.log('error');
+        console.log(error);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderRows, {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderTable, {
         shops: this.state.shops
-      }))));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "shop"
+      }, "new shop"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "name",
+        value: this.state.name,
+        onChange: this.inputChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        name: "image",
+        onChange: this.inputFileChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: this.state.imagePreviewUrl,
+        width: "200"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.addShop
+      }, "\u767B\u9332"));
     }
   }]);
 
