@@ -47968,9 +47968,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -47985,10 +47985,17 @@ var RenderRows = function RenderRows(props) {
       key: product.id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/products/".concat(product.id)
-    }, product.id)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, product.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: product.imageUrl
+    }, product.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, product.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: product.imageUrl,
+      width: "200"
     })));
   });
+};
+
+var RenderTable = function RenderTable(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderRows, {
+    products: props.products
+  })));
 };
 
 var ProductsList =
@@ -48003,8 +48010,16 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ProductsList).call(this));
     _this.state = {
-      products: []
+      products: [],
+      title: '',
+      description: '',
+      price: 0,
+      image: '',
+      imagePreviewUrl: ''
     };
+    _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
+    _this.inputFileChange = _this.inputFileChange.bind(_assertThisInitialized(_this));
+    _this.addProduct = _this.addProduct.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -48014,6 +48029,8 @@ function (_Component) {
       var _this2 = this;
 
       axios.get('/api/products').then(function (res) {
+        console.log(res);
+
         _this2.setState({
           products: res.data
         });
@@ -48022,11 +48039,115 @@ function (_Component) {
       });
     }
   }, {
+    key: "inputChange",
+    value: function inputChange(event) {
+      console.log(event.target);
+
+      switch (event.target.name) {
+        case 'title':
+          this.setState({
+            title: event.target.value
+          });
+          break;
+
+        case 'description':
+          this.setState({
+            description: event.target.value
+          });
+          break;
+
+        case 'price':
+          this.setState({
+            price: event.target.value
+          });
+          break;
+
+        default:
+          break;
+      }
+    }
+  }, {
+    key: "inputFileChange",
+    value: function inputFileChange(event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      var reader = new FileReader();
+      var image = event.target.files[0];
+
+      reader.onloadend = function () {
+        _this3.setState({
+          image: image,
+          imagePreviewUrl: reader.result
+        });
+      };
+
+      reader.readAsDataURL(image);
+    }
+  }, {
+    key: "addProduct",
+    value: function addProduct() {
+      var _this4 = this;
+
+      var params = new FormData();
+      params.append('title', this.state.title);
+      params.append('description', this.state.description);
+      params.append('price', this.state.price);
+      params.append('image', this.state.image);
+      axios.post('/api/products', params, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      }).then(function (res) {
+        console.log('res');
+        console.log(res);
+
+        _this4.setState({
+          title: '',
+          description: '',
+          price: 0,
+          image: '',
+          imagePreviewUrl: ''
+        });
+
+        _this4.componentDidMount();
+      })["catch"](function (error) {
+        console.log('error');
+        console.log(error);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderRows, {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderTable, {
         products: this.state.products
-      }))));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "product"
+      }, "new product"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "title",
+        value: this.state.title,
+        onChange: this.inputChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "description",
+        value: this.state.description,
+        onChange: this.inputChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "price",
+        value: this.state.price,
+        onChange: this.inputChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        name: "image",
+        onChange: this.inputFileChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: this.state.imagePreviewUrl,
+        width: "200"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.addProduct
+      }, "\u767B\u9332"));
     }
   }]);
 

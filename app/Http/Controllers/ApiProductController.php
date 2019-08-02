@@ -20,7 +20,7 @@ class ApiProductController extends Controller
         $request->validate($productService->addRule);
         $productService->addProduct($request->all()); //$request->all() = [title,description,price,image]
         //redirectを返さないとクライアントの画面が真っ白になる(POSTでsubmitするとviewを返さないといけない)
-        return redirect(url()->previous());
+        //return redirect(url()->previous());
     }
 
 
