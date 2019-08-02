@@ -48020,12 +48020,19 @@ function (_Component) {
     _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
     _this.inputFileChange = _this.inputFileChange.bind(_assertThisInitialized(_this));
     _this.addProduct = _this.addProduct.bind(_assertThisInitialized(_this));
+    _this.getProducts = _this.getProducts.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(ProductsList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.getProducts();
+    } //非同期に商品一覧を取得する
+
+  }, {
+    key: "getProducts",
+    value: function getProducts() {
       var _this2 = this;
 
       axios.get('/api/products').then(function (res) {
@@ -48110,7 +48117,7 @@ function (_Component) {
           imagePreviewUrl: ''
         });
 
-        _this4.componentDidMount();
+        _this4.getProducts();
       })["catch"](function (error) {
         console.log('error');
         console.log(error);

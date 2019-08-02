@@ -47,9 +47,15 @@ export default class ProductsList extends Component {
         this.inputChange = this.inputChange.bind(this)
         this.inputFileChange = this.inputFileChange.bind(this)
         this.addProduct = this.addProduct.bind(this)
+        this.getProducts = this.getProducts.bind(this)
     }
 
     componentDidMount() {
+        this.getProducts()
+    }
+
+    //非同期に商品一覧を取得する
+    getProducts() {
         axios
             .get('/api/products')
             .then((res) => {
@@ -62,6 +68,7 @@ export default class ProductsList extends Component {
                 console.log(error)
             })
     }
+
 
     inputChange(event) {
         console.log(event.target)
@@ -124,7 +131,7 @@ export default class ProductsList extends Component {
                     image: '',
                     imagePreviewUrl: ''
                 })
-                this.componentDidMount()
+                this.getProducts()
             })
             .catch(error => {
                 console.log('error')
