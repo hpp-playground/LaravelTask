@@ -1,17 +1,18 @@
 import React, {Component, Fragment} from 'react'
+import { withRouter } from 'react-router'
 
 const ProductDetail = (props) => (
     <ul>
         <li><img src={props.product.imageUrl} width="400" /></li>
         <li>{props.product.title}</li>
-        <li>{props.product.description}}</li>
+        <li>{props.product.description}</li>
         <li>{props.product.price}</li>
     </ul>
 )
 
 
 
-export default class ProductCard extends Component {
+class ProductCard extends Component {
     constructor (props) {
         super(props)
         const {params} = this.props.match
@@ -27,6 +28,8 @@ export default class ProductCard extends Component {
         }
         this.getProduct = this.getProduct.bind(this)
         this.updateProduct = this.updateProduct.bind(this)
+        this.deleteProduct = this.deleteProduct.bind(this)
+
         this.inputChange = this.inputChange.bind(this)
         this.inputFileChange = this.inputFileChange.bind(this)
     }
@@ -77,6 +80,28 @@ export default class ProductCard extends Component {
                     imagePreviewUrl: ''
                 })
                 this.getProduct()
+            })
+            .catch(error => {
+                console.log('error')
+                console.log(error)
+            })
+    }
+
+    deleteProduct() {
+        //削除をしても一覧に削除済みの商品が残っているのはいやなので,非同期処理だが削除完了後に遷移させる
+        axios
+            .post(
+                `/api/products/${this.state.id}`,
+                [],
+                {
+                headers: {
+                'X-HTTP-Method-Override': 'DELETE',
+                }
+            })
+            .then((res) => {
+                console.log('res')
+                console.log(res)
+                this.props.history.push('/products')
             })
             .catch(error => {
                 console.log('error')
@@ -135,6 +160,7 @@ export default class ProductCard extends Component {
                     <img src={this.state.imagePreviewUrl} width="200" />
                 </div>
                 <button onClick={this.updateProduct}>Update</button>
+                <button onClick={this.deleteProduct}>Delete</button>
             </Fragment>
         )
     }
@@ -142,3 +168,4 @@ export default class ProductCard extends Component {
 
 }
 
+export default withRouter(ProductCard)

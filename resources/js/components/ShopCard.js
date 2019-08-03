@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react'
+import { withRouter } from 'react-router'
 
 const ShopDetail = (props) => (
     <ul>
@@ -9,7 +10,7 @@ const ShopDetail = (props) => (
 
 
 
-export default class ShopCard extends Component {
+class ShopCard extends Component {
     constructor (props) {
         super(props)
         const {params} = this.props.match
@@ -23,6 +24,8 @@ export default class ShopCard extends Component {
         }
         this.getShop = this.getShop.bind(this)
         this.updateShop = this.updateShop.bind(this)
+        this.deleteShop = this.deleteShop.bind(this)
+
         this.inputChange = this.inputChange.bind(this)
         this.inputFileChange = this.inputFileChange.bind(this)
     }
@@ -76,6 +79,28 @@ export default class ShopCard extends Component {
             })
     }
 
+    deleteShop() {
+        //削除をしても一覧に削除済みの店舗が残っているのはいやなので,非同期処理だが削除完了後に遷移させる
+        axios
+            .post(
+                `/api/shops/${this.state.id}`,
+                [],
+                {
+                headers: {
+                'X-HTTP-Method-Override': 'DELETE',
+                }
+            })
+            .then((res) => {
+                console.log('res')
+                console.log(res)
+                this.props.history.push('/shops')
+            })
+            .catch(error => {
+                console.log('error')
+                console.log(error)
+            })
+    }
+
     inputChange(event) {
         console.log(event.target)
         this.setState({
@@ -107,6 +132,7 @@ export default class ShopCard extends Component {
                     <img src={this.state.imagePreviewUrl} width="200" />
                 </div>
                 <button onClick={this.updateShop}>Update</button>
+                <button onClick={this.deleteShop}>Delete</button>
             </Fragment>
         )
     }
@@ -114,3 +140,4 @@ export default class ShopCard extends Component {
 
 }
 
+export default withRouter(ShopCard)
