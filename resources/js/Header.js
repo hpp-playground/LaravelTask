@@ -20,19 +20,23 @@ export default Header
 
 const HeaderStyle = styled.div`
     position: fixed;
+    display: flex;
+    justify-content: flex-end;
     top: 0;
     left: 0;
     width: 100vw;
-    height: 10vh;
-    padding: 10px;
+    height: 5vw;
 
     nav ul {
         list-style: none;
-
         li {
-            display: inline-block;
+            display: inline-flex;
             padding: 10px;
-
+            a {
+                color: rgb(220, 237, 240);
+                text-decoration: none;
+                font-family: 'Julius Sans One', sans-serif;
+            }
         }
     }
 `

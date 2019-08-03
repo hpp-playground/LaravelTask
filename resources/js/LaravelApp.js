@@ -4,6 +4,8 @@ import {
     Route,
     Switch
 } from 'react-router-dom'
+import styled from 'styled-components'
+import { Reset } from 'styled-reset'
 import Home from './components/Home'
 import ProductsList from './components/ProductsList'
 import ProductCard from './components/ProductCard'
@@ -15,6 +17,7 @@ import Footer from './Footer'
 
 const LaravelApp = () => (
     <Router>
+        <Reset />
         <Header />
         <Switch>
             <Route exact path='/' component={Home} />
