@@ -51186,9 +51186,9 @@ var TopStyle = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_te
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ProductCard; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51209,11 +51209,12 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var ProductDetail = function ProductDetail(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: props.product.imageUrl,
     width: "400"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, props.product.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, props.product.description, "}"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, props.product.price));
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, props.product.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, props.product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, props.product.price));
 };
 
 var ProductCard =
@@ -51240,6 +51241,7 @@ function (_Component) {
     };
     _this.getProduct = _this.getProduct.bind(_assertThisInitialized(_this));
     _this.updateProduct = _this.updateProduct.bind(_assertThisInitialized(_this));
+    _this.deleteProduct = _this.deleteProduct.bind(_assertThisInitialized(_this));
     _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
     _this.inputFileChange = _this.inputFileChange.bind(_assertThisInitialized(_this));
     return _this;
@@ -51299,6 +51301,26 @@ function (_Component) {
       });
     }
   }, {
+    key: "deleteProduct",
+    value: function deleteProduct() {
+      var _this4 = this;
+
+      //削除をしても一覧に削除済みの商品が残っているのはいやなので,非同期処理だが削除完了後に遷移させる
+      axios.post("/api/products/".concat(this.state.id), [], {
+        headers: {
+          'X-HTTP-Method-Override': 'DELETE'
+        }
+      }).then(function (res) {
+        console.log('res');
+        console.log(res);
+
+        _this4.props.history.push('/products');
+      })["catch"](function (error) {
+        console.log('error');
+        console.log(error);
+      });
+    }
+  }, {
     key: "inputChange",
     value: function inputChange(event) {
       console.log(event.target);
@@ -51329,13 +51351,14 @@ function (_Component) {
   }, {
     key: "inputFileChange",
     value: function inputFileChange(event) {
-      var _this4 = this;
+      var _this5 = this;
 
+      event.preventDefault();
       var reader = new FileReader();
       var image = event.target.files[0];
 
       reader.onloadend = function () {
-        _this4.setState({
+        _this5.setState({
           image: image,
           imagePreviewUrl: reader.result
         });
@@ -51374,14 +51397,16 @@ function (_Component) {
         width: "200"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.updateProduct
-      }, "\u767B\u9332"));
+      }, "Update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.deleteProduct
+      }, "Delete"));
     }
   }]);
 
   return ProductCard;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ProductCard));
 
 /***/ }),
 
@@ -51614,9 +51639,9 @@ function (_Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ShopCard; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51634,6 +51659,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -51666,6 +51692,7 @@ function (_Component) {
     };
     _this.getShop = _this.getShop.bind(_assertThisInitialized(_this));
     _this.updateShop = _this.updateShop.bind(_assertThisInitialized(_this));
+    _this.deleteShop = _this.deleteShop.bind(_assertThisInitialized(_this));
     _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
     _this.inputFileChange = _this.inputFileChange.bind(_assertThisInitialized(_this));
     return _this;
@@ -51721,6 +51748,26 @@ function (_Component) {
       });
     }
   }, {
+    key: "deleteShop",
+    value: function deleteShop() {
+      var _this4 = this;
+
+      //削除をしても一覧に削除済みの店舗が残っているのはいやなので,非同期処理だが削除完了後に遷移させる
+      axios.post("/api/shops/".concat(this.state.id), [], {
+        headers: {
+          'X-HTTP-Method-Override': 'DELETE'
+        }
+      }).then(function (res) {
+        console.log('res');
+        console.log(res);
+
+        _this4.props.history.push('/shops');
+      })["catch"](function (error) {
+        console.log('error');
+        console.log(error);
+      });
+    }
+  }, {
     key: "inputChange",
     value: function inputChange(event) {
       console.log(event.target);
@@ -51731,13 +51778,14 @@ function (_Component) {
   }, {
     key: "inputFileChange",
     value: function inputFileChange(event) {
-      var _this4 = this;
+      var _this5 = this;
 
+      event.preventDefault();
       var reader = new FileReader();
       var image = event.target.files[0];
 
       reader.onloadend = function () {
-        _this4.setState({
+        _this5.setState({
           image: image,
           imagePreviewUrl: reader.result
         });
@@ -51766,14 +51814,16 @@ function (_Component) {
         width: "200"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.updateShop
-      }, "\u767B\u9332"));
+      }, "Update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.deleteShop
+      }, "Delete"));
     }
   }]);
 
   return ShopCard;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ShopCard));
 
 /***/ }),
 
