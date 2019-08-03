@@ -18,7 +18,6 @@ import Footer from './Footer'
 const LaravelApp = () => (
     <Router>
         <Reset />
-        <Header />
         <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/products' component={ProductsList} />
