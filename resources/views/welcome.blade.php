@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Julius+Sans+One&display=swap" rel="stylesheet">
 
-    <title>react test</title>
+    <title>Laravel Task</title>
 </head>
 
 <body style="overscroll-behavior: none; box-sizing:border-box;">
