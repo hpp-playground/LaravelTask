@@ -1,9 +1,11 @@
 # Laravel Task
 
-Laravelを用いた課題用リポジトリです.仕様は以下の通り.
+teamLab株式会社のSummer Internshipに参加するにあたって事前課題として作成した,Laravelを用いたCRUDを行うアプリケーションのリポジトリです.
+仕様は以下の通りです.
 URLは
 http://laraveltaskproject.herokuapp.com
-フレームワークとしてLaravel5.8を使用
+フレームワークとしてLaravel5.8を使用.
+全体としてテスト駆動開発で進めました.
 
 ## 機能とAPIエンドポイント
 
